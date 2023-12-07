@@ -1047,7 +1047,7 @@
                 15,
                 15,
                 15,
-                0,
+                15,
                 15,
                 15,
                 15,
@@ -52101,6 +52101,134 @@
             "animSpeed": 15
         },
         {
+            "id": "1cc3095a-8600-4d04-8e8f-8f3af5678fa7",
+            "name": "radio",
+            "symbol": "sprite_radio",
+            "numFrames": 1,
+            "type": "static",
+            "filename": "radio.png",
+            "checksum": "ae9943b8ed1e48fe22fafe87bf1b64245dcbd31c",
+            "width": 16,
+            "height": 16,
+            "states": [
+                {
+                    "id": "ac496df8-9fd4-4b31-b409-e2b9bc5dfbad",
+                    "name": "",
+                    "animationType": "fixed",
+                    "flipLeft": false,
+                    "animations": [
+                        {
+                            "id": "e15a00ff-b8d6-4358-a58d-08c9771fce56",
+                            "frames": [
+                                {
+                                    "id": "ddf60e30-ff64-4b09-b1c4-6ea71ef9a221",
+                                    "tiles": [
+                                        {
+                                            "id": "b58793f0-3be8-49e5-8d60-1d496e2df61e",
+                                            "x": 0,
+                                            "y": 0,
+                                            "sliceX": 0,
+                                            "sliceY": 0,
+                                            "flipX": false,
+                                            "flipY": false,
+                                            "palette": 0,
+                                            "paletteIndex": 0,
+                                            "objPalette": "OBP0",
+                                            "priority": false
+                                        },
+                                        {
+                                            "id": "d3107db4-5ea6-4010-85c5-4ed150a14c3e",
+                                            "x": 8,
+                                            "y": 0,
+                                            "sliceX": 8,
+                                            "sliceY": 0,
+                                            "flipX": false,
+                                            "flipY": false,
+                                            "palette": 0,
+                                            "paletteIndex": 0,
+                                            "objPalette": "OBP0",
+                                            "priority": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "41434d54-1446-45eb-bc87-79ad8ae84b5c",
+                            "frames": [
+                                {
+                                    "id": "52f413da-431d-473a-be21-63fa1cb1f0de",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "f43bf052-414f-4248-a9a4-dced4576513e",
+                            "frames": [
+                                {
+                                    "id": "8360fa9d-e18e-49aa-9d8f-00d430c250dc",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "4c388e22-27c0-4861-9fd1-5f8a2f69d15d",
+                            "frames": [
+                                {
+                                    "id": "62c4d0c6-8aa2-4916-882e-a2a618b3b39a",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "e4598caf-1c87-4911-8662-87fe6bdcd351",
+                            "frames": [
+                                {
+                                    "id": "a95a8504-7f4e-4184-a6a5-17f5a35cabad",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "6de4d84d-c832-4a53-91a8-3f1ec60d9d7e",
+                            "frames": [
+                                {
+                                    "id": "c8bdcc54-8670-42de-bd51-94bf6bc710e5",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "a38d0e9c-20cc-45a7-a599-ec0d0b20b0ee",
+                            "frames": [
+                                {
+                                    "id": "0fba27eb-ad50-4892-b978-013db90bf577",
+                                    "tiles": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "9d59af33-5e24-42d0-b1ec-7bc37a0d0a0c",
+                            "frames": [
+                                {
+                                    "id": "4364a706-3935-4026-a795-505ef274e6fc",
+                                    "tiles": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "numTiles": 2,
+            "canvasWidth": 16,
+            "canvasHeight": 16,
+            "boundsX": 0,
+            "boundsY": 0,
+            "boundsWidth": 16,
+            "boundsHeight": 16,
+            "animSpeed": 15
+        },
+        {
             "id": "3939e8d2-3987-4a22-953e-f1d82134eccf",
             "name": "rock",
             "symbol": "sprite_rock",
@@ -54567,9 +54695,9 @@
         "startDirection": "right",
         "showCollisions": true,
         "showConnections": true,
-        "worldScrollX": 240,
-        "worldScrollY": 79,
-        "zoom": 63.199362978339195,
+        "worldScrollX": 397,
+        "worldScrollY": 20,
+        "zoom": 122.32320648431778,
         "customColorsEnabled": false,
         "sgbEnabled": false,
         "customHead": "<meta title=\"Arena - GameBoy\">",
