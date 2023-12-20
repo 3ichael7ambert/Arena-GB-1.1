@@ -4,8 +4,6 @@
 // Actors
 
 #include "gbs_types.h"
-#include "data/sprite_hp.h"
-#include "data/actor_1_update.h"
 #include "data/sprite_bullet.h"
 #include "data/actor_5_update.h"
 #include "data/sprite_npc003.h"
@@ -38,33 +36,11 @@
 #include "data/sprite_npc003.h"
 #include "data/actor_111_update.h"
 #include "data/actor_111_interact.h"
+#include "data/sprite_hp.h"
 
 BANKREF(scene_5_actors)
 
 const struct actor_t scene_5_actors[] = {
-    {
-        // HP,
-        .pos = {
-            .x = 8 * 16,
-            .y = 24 * 16
-        },
-        .bounds = {
-            .left = -8,
-            .bottom = 7,
-            .right = 23,
-            .top = -24
-        },
-        .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(sprite_hp),
-        .move_speed = 16,
-        .anim_tick = 15,
-        .pinned = TRUE,
-        .persistent = TRUE,
-        .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = FALSE,
-        .script_update = TO_FAR_PTR_T(actor_1_update),
-        .reserve_tiles = 0
-    },
     {
         // controller,
         .pos = {
@@ -326,6 +302,28 @@ const struct actor_t scene_5_actors[] = {
         .collision_enabled = TRUE,
         .script_update = TO_FAR_PTR_T(actor_111_update),
         .script = TO_FAR_PTR_T(actor_111_interact),
+        .reserve_tiles = 0
+    },
+    {
+        // HP,
+        .pos = {
+            .x = 8 * 16,
+            .y = 24 * 16
+        },
+        .bounds = {
+            .left = -8,
+            .bottom = 7,
+            .right = 23,
+            .top = -24
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(sprite_hp),
+        .move_speed = 16,
+        .anim_tick = 255,
+        .pinned = TRUE,
+        .persistent = TRUE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = FALSE,
         .reserve_tiles = 0
     }
 };

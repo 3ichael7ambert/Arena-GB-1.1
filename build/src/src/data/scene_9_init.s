@@ -22,9 +22,6 @@ _scene_9_init::
         VM_RESERVE              4
 
         ; Variable Set To Value
-        VM_SET_CONST            VAR_PLAYERHEALTH, 4
-
-        ; Variable Set To Value
         VM_SET_CONST            VAR_S8A8_HEALTH, 3
 
         ; Variables .ADD Value
@@ -45,6 +42,9 @@ _scene_9_init::
         VM_SET                  VAR_LEVEL, .ARG0
         VM_POP                  1
 
+        ; Variable Set To True
+        VM_SET_CONST            VAR_S8A8_COOLCOUNT, 1
+
         ; Variable Set To Value
         VM_SET_CONST            VAR_S8A8_HEALTH_1, 3
 
@@ -62,7 +62,7 @@ _scene_9_init::
         VM_JUMP                 2$
 1$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 4
+        VM_SET_CONST            .LOCAL_ACTOR, 3
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 2$:
@@ -84,7 +84,7 @@ _scene_9_init::
         VM_JUMP                 4$
 3$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 5
+        VM_SET_CONST            .LOCAL_ACTOR, 4
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 4$:
@@ -106,7 +106,7 @@ _scene_9_init::
         VM_JUMP                 6$
 5$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 6
+        VM_SET_CONST            .LOCAL_ACTOR, 5
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 6$:
@@ -128,7 +128,7 @@ _scene_9_init::
         VM_JUMP                 8$
 7$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 8$:
@@ -150,7 +150,7 @@ _scene_9_init::
         VM_JUMP                 10$
 9$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 8
+        VM_SET_CONST            .LOCAL_ACTOR, 7
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 10$:
@@ -172,7 +172,7 @@ _scene_9_init::
         VM_JUMP                 12$
 11$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 9
+        VM_SET_CONST            .LOCAL_ACTOR, 8
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 12$:
@@ -194,7 +194,7 @@ _scene_9_init::
         VM_JUMP                 14$
 13$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 10
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 14$:
@@ -216,7 +216,7 @@ _scene_9_init::
         VM_JUMP                 16$
 15$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 11
+        VM_SET_CONST            .LOCAL_ACTOR, 10
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 16$:
@@ -238,17 +238,24 @@ _scene_9_init::
         VM_JUMP                 18$
 17$:
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 12
+        VM_SET_CONST            .LOCAL_ACTOR, 11
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 18$:
+
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 12
+
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 4
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
         ; Input Script Attach
         VM_CONTEXT_PREPARE      4, ___bank_script_input_6, _script_input_6
         VM_INPUT_ATTACH         16, ^/(4 | .OVERRIDE_DEFAULT)/
 
         ; Variable Set To Value
-        VM_SET_CONST            VAR_S8_HEALTH, 4
+        VM_SET_CONST            VAR_PLAYERHEALTH, 4
 
         ; Variable Copy
         VM_SET                  VAR_ENEMYCOUNT, VAR_MASENEMYCOUNT

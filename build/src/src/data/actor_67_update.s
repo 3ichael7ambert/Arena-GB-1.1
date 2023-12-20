@@ -19,7 +19,7 @@ _actor_67_update::
 
 1$:
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; If Actor .LTE 5 tiles from Actor
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -63,7 +63,7 @@ _actor_67_update::
         VM_IF_CONST             .EQ, .ARG0, 0, 2$, 1
 
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Launch Projectile In Source Actor Direction
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -82,7 +82,7 @@ _actor_67_update::
 3$:
 
         ; Switch Variable
-        VM_SWITCH               VAR_S9A6_DIRECTION, 4, 0
+        VM_SWITCH               VAR_S9A5_DIRECTION, 4, 0
         .dw 1, 4$
         .dw 2, 5$
         .dw 3, 6$
@@ -92,7 +92,7 @@ _actor_67_update::
         ; case 1:
 4$:
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -118,7 +118,7 @@ _actor_67_update::
         ; case 2:
 5$:
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -144,7 +144,7 @@ _actor_67_update::
         ; case 3:
 6$:
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -170,7 +170,7 @@ _actor_67_update::
         ; case 4:
 7$:
         ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
@@ -200,7 +200,7 @@ _actor_67_update::
         VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP2_WAIT_ARGS
 
         ; Variable Set To Random
-        VM_RAND                 VAR_S9A6_DIRECTION, 1, 4
+        VM_RAND                 VAR_S9A5_DIRECTION, 1, 4
 
         ; If Variable .LTE Value
         VM_IF_CONST             .LTE, VAR_S9A9_HEALTH_4, 0, 9$, 0
@@ -216,7 +216,7 @@ _actor_67_update::
         VM_POP                  1
 
         ; Actor Deactivate
-        VM_SET_CONST            .LOCAL_ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 6
         VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
 10$:

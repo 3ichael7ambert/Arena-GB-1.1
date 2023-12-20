@@ -23,15 +23,6 @@ _scene_10_p_hit1::
         VM_IF_CONST             .EQ, .LOCAL_TMP0_PARAM0_VALUE, 2, 1$, 0
         VM_JUMP                 2$
 1$:
-        ; Variable L0 = VAR_S2_HEALTH-1
-        VM_RPN
-            .R_REF      VAR_S2_HEALTH
-            .R_INT16    1
-            .R_OPERATOR .SUB
-            .R_STOP
-        VM_SET                  VAR_S2_HEALTH, .ARG0
-        VM_POP                  1
-
         ; Stop Script
         VM_STOP
 2$:
@@ -50,8 +41,8 @@ _scene_10_p_hit1::
         VM_SET                  VAR_PLAYERHEALTH, .ARG0
         VM_POP                  1
 
-        ; If Variable .EQ Value
-        VM_IF_CONST             .EQ, VAR_PLAYERHEALTH, 0, 5$, 0
+        ; If Variable .LTE Value
+        VM_IF_CONST             .LTE, VAR_PLAYERHEALTH, 0, 5$, 0
         VM_JUMP                 6$
 5$:
         ; Variable Set To Value
@@ -72,6 +63,13 @@ _scene_10_p_hit1::
             IMPORT_FAR_PTR_DATA _scene_14
 
 6$:
+
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 12
+
+        ; Actor Set Animation Frame To Variable
+        VM_SET                  ^/(.LOCAL_ACTOR + 1)/, VAR_PLAYERHEALTH
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
         ; Stop Script
         VM_STOP

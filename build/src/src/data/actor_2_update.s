@@ -50,6 +50,33 @@ _actor_2_update::
 
 3$:
 
+        ; If Variable True
+        VM_IF_CONST             .GT, VAR_COOLDOWN, 0, 4$, 0
+        ; Variable Decrement By 1
+        VM_RPN
+            .R_REF      VAR_S2A2_COOLCOUNT
+            .R_INT8     1
+            .R_OPERATOR .SUB
+            .R_STOP
+        VM_SET                  VAR_S2A2_COOLCOUNT, .ARG0
+        VM_POP                  1
+
+        VM_JUMP                 5$
+4$:
+5$:
+
+        ; If Variable .LTE Value
+        VM_IF_CONST             .LTE, VAR_S2A2_COOLCOUNT, 0, 6$, 0
+        VM_JUMP                 7$
+6$:
+        ; Variable Set To True
+        VM_SET_CONST            VAR_COOLDOWN, 1
+
+        ; Variable Set To True
+        VM_SET_CONST            VAR_S2A2_COOLCOUNT, 1
+
+7$:
+
         ; Idle
         VM_IDLE
 

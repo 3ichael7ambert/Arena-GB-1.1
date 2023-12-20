@@ -4,7 +4,7 @@
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl _fade_frames_per_step, ___bank_scene_logo, _scene_logo, ___bank_scene_14, _scene_14
+.globl _fade_frames_per_step, ___bank_scene_logo, _scene_logo
 
 .area _CODE_255
 
@@ -96,28 +96,12 @@ _scene_12_p_hit1::
 
 8$:
 
-        ; If Variable .EQ Value
-        VM_IF_CONST             .EQ, VAR_PLAYERHEALTH, 0, 9$, 0
-        VM_JUMP                 10$
-9$:
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_LEVEL, 1
-
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_PLAYERHEALTH, 4
-
-        ; Load Scene
-        VM_SET_CONST_INT8       _fade_frames_per_step, 3
-        VM_FADE_OUT             1
+        ; Actor Set Active
         VM_SET_CONST            .LOCAL_ACTOR, 0
-        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 0
-        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 0
-        VM_ACTOR_SET_POS        .LOCAL_ACTOR
-        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_DOWN
-        VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
-            IMPORT_FAR_PTR_DATA _scene_14
 
-10$:
+        ; Actor Set Animation Frame To Variable
+        VM_SET                  ^/(.LOCAL_ACTOR + 1)/, VAR_PLAYERHEALTH
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
         ; Stop Script
         VM_STOP

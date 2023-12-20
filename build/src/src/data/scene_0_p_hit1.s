@@ -54,6 +54,13 @@ _scene_0_p_hit1::
 
 4$:
 
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+
+        ; Actor Set Animation Frame To Variable
+        VM_SET                  ^/(.LOCAL_ACTOR + 1)/, VAR_PLAYERHEALTH
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
+
         ; Stop Script
         VM_STOP
 2$:
