@@ -23,9 +23,8 @@ _actor_33_interact::
             .R_REF      VAR_S6A6_HEALTH_1
             .R_INT16    1
             .R_OPERATOR .SUB
+            .R_REF_SET  VAR_S6A6_HEALTH_1
             .R_STOP
-        VM_SET                  VAR_S6A6_HEALTH_1, .ARG0
-        VM_POP                  1
 
         ; Stop Script
         VM_STOP

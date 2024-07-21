@@ -4,12 +4,13 @@
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl _fade_frames_per_step, ___bank_scene_14, _scene_14
+.globl _fade_frames_per_step, _camera_settings, ___bank_scene_14, _scene_14
 
 .area _CODE_255
 
 .LOCAL_TMP0_PARAM0_VALUE = -4
 .LOCAL_TMP1_PARAM0_VALUE = -4
+.LOCAL_TMP2_IF_VALUE = -4
 .LOCAL_ACTOR = -4
 
 ___bank_scene_10_p_hit1 = 255
@@ -37,12 +38,19 @@ _scene_10_p_hit1::
             .R_REF      VAR_PLAYERHEALTH
             .R_INT16    1
             .R_OPERATOR .SUB
+            .R_REF_SET  VAR_PLAYERHEALTH
             .R_STOP
-        VM_SET                  VAR_PLAYERHEALTH, .ARG0
-        VM_POP                  1
 
-        ; If Variable .LTE Value
-        VM_IF_CONST             .LTE, VAR_PLAYERHEALTH, 0, 5$, 0
+        ; If
+        ; -- Calculate value
+        VM_RPN
+            .R_REF      VAR_PLAYERHEALTH
+            .R_INT16    0
+            .R_OPERATOR .LTE
+            .R_REF_SET  .LOCAL_TMP2_IF_VALUE
+            .R_STOP
+        ; If Truthy
+        VM_IF_CONST             .NE, .LOCAL_TMP2_IF_VALUE, 0, 5$, 0
         VM_JUMP                 6$
 5$:
         ; Variable Set To Value
@@ -54,21 +62,29 @@ _scene_10_p_hit1::
         ; Load Scene
         VM_SET_CONST_INT8       _fade_frames_per_step, 3
         VM_FADE_OUT             1
+        ; -- Calculate coordinate values
+        VM_RPN
+            .R_INT16    0
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_INT16    0
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 2)/
+            .R_STOP
         VM_SET_CONST            .LOCAL_ACTOR, 0
-        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 0
-        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 0
         VM_ACTOR_SET_POS        .LOCAL_ACTOR
         VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_DOWN
+        VM_SET_CONST_INT8       _camera_settings, .CAMERA_LOCK
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_14
 
 6$:
 
-        ; Actor Set Active
+        ; Actor Set Animation Frame To
+        ; -- Calculate value
+        VM_RPN
+            .R_REF      VAR_PLAYERHEALTH
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_STOP
         VM_SET_CONST            .LOCAL_ACTOR, 12
-
-        ; Actor Set Animation Frame To Variable
-        VM_SET                  ^/(.LOCAL_ACTOR + 1)/, VAR_PLAYERHEALTH
         VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
         ; Stop Script

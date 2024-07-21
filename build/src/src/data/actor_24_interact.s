@@ -23,9 +23,8 @@ _actor_24_interact::
             .R_REF      VAR_S9A9_HEALTH
             .R_INT16    1
             .R_OPERATOR .SUB
+            .R_REF_SET  VAR_S9A9_HEALTH
             .R_STOP
-        VM_SET                  VAR_S9A9_HEALTH, .ARG0
-        VM_POP                  1
 
         ; Stop Script
         VM_STOP

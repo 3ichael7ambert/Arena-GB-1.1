@@ -23,9 +23,8 @@ _actor_52_interact::
             .R_REF      VAR_S5A5_HEALTH_3
             .R_INT16    1
             .R_OPERATOR .SUB
+            .R_REF_SET  VAR_S5A5_HEALTH_3
             .R_STOP
-        VM_SET                  VAR_S5A5_HEALTH_3, .ARG0
-        VM_POP                  1
 
         ; Stop Script
         VM_STOP

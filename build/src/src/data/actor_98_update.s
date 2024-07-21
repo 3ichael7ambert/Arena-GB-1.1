@@ -9,19 +9,32 @@
 
 .LOCAL_ACTOR = -4
 .LOCAL_TMP1_OTHER_ACTOR = -7
-.LOCAL_TMP2_WAIT_ARGS = -7
+.LOCAL_TMP3_LOCAL = -7
+.LOCAL_TMP5_LOCAL = -7
+.LOCAL_TMP7_LOCAL = -7
+.LOCAL_TMP9_LOCAL = -7
+.LOCAL_TMP11_WAIT_ARGS = -7
+.LOCAL_TMP12_IF_VALUE = -7
+.LOCAL_TMP2_DISTANCE = -8
+.LOCAL_TMP4_LOCAL = -8
+.LOCAL_TMP6_LOCAL = -8
+.LOCAL_TMP8_LOCAL = -8
+.LOCAL_TMP10_LOCAL = -8
 
 ___bank_actor_98_update = 255
 .globl ___bank_actor_98_update
 
 _actor_98_update::
-        VM_RESERVE              7
+        VM_RESERVE              8
 
 1$:
-        ; Actor Set Active
+        ; If Actor Distance from Actor
+        ; -- Calculate value
+        VM_RPN
+            .R_INT16    5
+            .R_REF_SET  .LOCAL_TMP2_DISTANCE
+            .R_STOP
         VM_SET_CONST            .LOCAL_ACTOR, 9
-
-        ; If Actor .LTE 5 tiles from Actor
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_SET_CONST            .LOCAL_TMP1_OTHER_ACTOR, 0
         VM_ACTOR_GET_POS        .LOCAL_TMP1_OTHER_ACTOR
@@ -57,7 +70,9 @@ _actor_98_update::
             .R_OPERATOR .SUB
             .R_OPERATOR .MUL
             .R_OPERATOR .ADD
-            .R_INT16    25
+            .R_REF      .LOCAL_TMP2_DISTANCE
+            .R_REF      .LOCAL_TMP2_DISTANCE
+            .R_OPERATOR .MUL
             .R_OPERATOR .LTE
             .R_STOP
         VM_IF_CONST             .EQ, .ARG0, 0, 2$, 1
@@ -91,119 +106,183 @@ _actor_98_update::
         VM_JUMP                 8$
         ; case 1:
 4$:
-        ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 9
-
         ; Actor Move Relative
+        ; -- Fetch $self$ pxpos
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
             .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    16
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
-            .R_REF      ^/(.LOCAL_ACTOR + 2)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP3_LOCAL
             .R_STOP
-        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
+        ; -- Fetch $self$ pypos
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    16
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP4_LOCAL
+            .R_STOP
+        ; -- Calculate coordinate values
+        VM_RPN
+            .R_REF      .LOCAL_TMP3_LOCAL
+            .R_INT16    1
+            .R_OPERATOR .ADD
+            .R_INT16    16
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_REF      .LOCAL_TMP4_LOCAL
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_INT16    16
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 2)/
+            .R_STOP
         VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL | .ACTOR_ATTR_H_FIRST)/
+        ; -- Move Actor
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         VM_JUMP                 8$
         ; case 2:
 5$:
-        ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 9
-
         ; Actor Move Relative
+        ; -- Fetch $self$ xpos
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
             .R_REF      ^/(.LOCAL_ACTOR + 1)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
+            .R_INT16    128
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP5_LOCAL
+            .R_STOP
+        ; -- Fetch $self$ ypos
+        VM_RPN
             .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    128
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP6_LOCAL
             .R_STOP
-        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
+        ; -- Calculate coordinate values
+        VM_RPN
+            .R_REF      .LOCAL_TMP5_LOCAL
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_REF      .LOCAL_TMP6_LOCAL
+            .R_INT16    1
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 2)/
+            .R_STOP
         VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL | .ACTOR_ATTR_H_FIRST)/
+        ; -- Move Actor
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         VM_JUMP                 8$
         ; case 3:
 6$:
-        ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 9
-
         ; Actor Move Relative
+        ; -- Fetch $self$ xpos
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
             .R_REF      ^/(.LOCAL_ACTOR + 1)/
-            .R_INT16    -128
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
-            .R_REF      ^/(.LOCAL_ACTOR + 2)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
+            .R_INT16    128
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP7_LOCAL
             .R_STOP
-        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
+        ; -- Fetch $self$ ypos
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    128
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP8_LOCAL
+            .R_STOP
+        ; -- Calculate coordinate values
+        VM_RPN
+            .R_REF      .LOCAL_TMP7_LOCAL
+            .R_INT16    -1
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_REF      .LOCAL_TMP8_LOCAL
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 2)/
+            .R_STOP
         VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL | .ACTOR_ATTR_H_FIRST)/
+        ; -- Move Actor
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         VM_JUMP                 8$
         ; case 4:
 7$:
-        ; Actor Set Active
-        VM_SET_CONST            .LOCAL_ACTOR, 9
-
         ; Actor Move Relative
+        ; -- Fetch $self$ xpos
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
             .R_REF      ^/(.LOCAL_ACTOR + 1)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
-            .R_REF      ^/(.LOCAL_ACTOR + 2)/
-            .R_INT16    -128
-            .R_OPERATOR .ADD
-            .R_INT16    0
-            .R_OPERATOR .MAX
+            .R_INT16    128
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP9_LOCAL
             .R_STOP
-        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
+        ; -- Fetch $self$ ypos
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    128
+            .R_OPERATOR .DIV
+            .R_REF_SET  .LOCAL_TMP10_LOCAL
+            .R_STOP
+        ; -- Calculate coordinate values
+        VM_RPN
+            .R_REF      .LOCAL_TMP9_LOCAL
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 1)/
+            .R_REF      .LOCAL_TMP10_LOCAL
+            .R_INT16    -1
+            .R_OPERATOR .ADD
+            .R_INT16    128
+            .R_OPERATOR .MUL
+            .R_REF_SET  ^/(.LOCAL_ACTOR + 2)/
+            .R_STOP
         VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL | .ACTOR_ATTR_H_FIRST)/
+        ; -- Move Actor
+        VM_SET_CONST            .LOCAL_ACTOR, 9
         VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         VM_JUMP                 8$
 8$:
 
         ; Wait N Frames
-        VM_SET_CONST            .LOCAL_TMP2_WAIT_ARGS, 30
-        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP2_WAIT_ARGS
+        VM_SET_CONST            .LOCAL_TMP11_WAIT_ARGS, 30
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP11_WAIT_ARGS
 
         ; Variable Set To Random
         VM_RAND                 VAR_S10A8_DIRECTION, 1, 4
 
-        ; If Variable .LTE Value
-        VM_IF_CONST             .LTE, VAR_S10A10_HEALTH_7, 0, 9$, 0
+        ; If
+        ; -- Calculate value
+        VM_RPN
+            .R_REF      VAR_S10A10_HEALTH_7
+            .R_INT16    0
+            .R_OPERATOR .LTE
+            .R_REF_SET  .LOCAL_TMP12_IF_VALUE
+            .R_STOP
+        ; If Truthy
+        VM_IF_CONST             .NE, .LOCAL_TMP12_IF_VALUE, 0, 9$, 0
         VM_JUMP                 10$
 9$:
         ; Variables .SUB Value
@@ -211,9 +290,8 @@ _actor_98_update::
             .R_REF      VAR_ENEMYCOUNT
             .R_INT16    1
             .R_OPERATOR .SUB
+            .R_REF_SET  VAR_ENEMYCOUNT
             .R_STOP
-        VM_SET                  VAR_ENEMYCOUNT, .ARG0
-        VM_POP                  1
 
         ; Actor Deactivate
         VM_SET_CONST            .LOCAL_ACTOR, 9
